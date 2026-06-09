@@ -13,11 +13,13 @@ const insertAdmin = async function (admin) {
     try {
         let sql = `
             insert into tbl_admin (
-                usuario,
-                senha
+                nome_usuario,
+                email,
+                senha_hash
             ) values (
-                '${admin.usuario}',
-                '${admin.senha}'
+                '${admin.nome_usuario}',
+                '${admin.email}',
+                '${admin.senha_hash}'
             );
         `
 
@@ -37,8 +39,9 @@ const updateAdmin = async function (admin) {
     try {
         let sql = `
             update tbl_admin set
-                usuario = '${admin.usuario}',
-                senha   = '${admin.senha}'
+                nome_usuario = '${admin.nome_usuario}',
+                email        = '${admin.email}',
+                senha_hash   = '${admin.senha_hash}'
             where id = ${admin.id};
         `
 
@@ -56,7 +59,10 @@ const updateAdmin = async function (admin) {
 
 const selectAllAdmin = async function () {
     try {
-        let sql = 'select id, usuario from tbl_admin order by id desc;'
+        let sql = `
+            select id, nome_usuario, email
+            from tbl_admin order by id desc;
+        `
 
         let result = await knexConnection.raw(sql)
 
@@ -72,7 +78,10 @@ const selectAllAdmin = async function () {
 
 const selectByIdAdmin = async function (id) {
     try {
-        let sql = `select id, usuario from tbl_admin where id = ${id};`
+        let sql = `
+            select id, nome_usuario, email
+            from tbl_admin where id = ${id};
+        `
 
         let result = await knexConnection.raw(sql)
 

@@ -17,7 +17,7 @@ const DEFAULT_MESSAGE = {
 
 // Mensagens de ERRO do projeto Frequency 80 Cafe
 const ERROR_BAD_REQUEST                = { "status": false, "status_code": 400, "message": "Não foi possível processar a requisição devido a erros de entrada de dados." }
-const ERROR_UNAUTHORIZED               = { "status": false, "status_code": 401, "message": "Usuário ou senha inválidos." }
+const ERROR_UNAUTHORIZED               = { "status": false, "status_code": 401, "message": "Não foi possível garantir a permissão do usuário. Dados inválidos." }
 const ERROR_NOT_FOUND                  = { "status": false, "status_code": 404, "message": "Não foi possível encontrar dados para retorno." }
 const ERROR_CONTENT_TYPE               = { "status": false, "status_code": 415, "message": "Não foi possível processar a requisição devido ao formato de dados encaminhado não ser suportado pelo servidor. Deve ser utilizado apenas o formato JSON." }
 const ERROR_INTERNAL_SERVER_CONTROLLER = { "status": false, "status_code": 500, "message": "Não foi possível processar a requisição devido a um erro interno do servidor [CONTROLLER]." }

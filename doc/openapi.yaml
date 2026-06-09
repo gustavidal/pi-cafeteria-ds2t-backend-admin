@@ -153,6 +153,10 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminGet'
         '400':
           description: Error Bad Request (dados)
         '401':
@@ -547,6 +551,7 @@ components:
           format: email
           description: O número máximo de caracteres é de 255
           maxLength: 255
+          minLength: 7
         senha:
           type: string
           description: O número máximo de caracteres é de 255
