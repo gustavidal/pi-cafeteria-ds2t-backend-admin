@@ -14,7 +14,7 @@ externalDocs:
   description: Find out more about Swagger
   url: http://swagger.io
 servers:
-  - url: http://localhost:8080
+  - url: https://frequency-80-cafe-administracao.onrender.com/
 paths:
   # ENDPOINTS - ADMIN
   /v1/frequency80cafe/administracao/admin:
