@@ -11,7 +11,6 @@ const knexConnection = knex(knexDatabaseConfig.development)
 
 const insertAdmin = async function (admin) {
     try {
-
         let sql = `
             insert into tbl_admin (
                 usuario,
@@ -36,7 +35,6 @@ const insertAdmin = async function (admin) {
 
 const updateAdmin = async function (admin) {
     try {
-
         let sql = `
             update tbl_admin set
                 usuario = '${admin.usuario}',
@@ -58,7 +56,6 @@ const updateAdmin = async function (admin) {
 
 const selectAllAdmin = async function () {
     try {
-
         let sql = 'select id, usuario from tbl_admin order by id desc;'
 
         let result = await knexConnection.raw(sql)
@@ -75,7 +72,6 @@ const selectAllAdmin = async function () {
 
 const selectByIdAdmin = async function (id) {
     try {
-
         let sql = `select id, usuario from tbl_admin where id = ${id};`
 
         let result = await knexConnection.raw(sql)
@@ -92,7 +88,6 @@ const selectByIdAdmin = async function (id) {
 
 const deleteAdmin = async function (id) {
     try {
-
         let sql = `delete from tbl_admin where id = ${id};`
 
         let result = await knexConnection.raw(sql)
@@ -107,11 +102,11 @@ const deleteAdmin = async function (id) {
     }
 }
 
-const selectByUsuarioAdmin = async function (usuario) {
+const selectByLoginAdmin = async function (login) {
     try {
         let sql = `
             select * from tbl_admin
-            where usuario = '${usuario}';
+            where email = '${login}' or nome_usuario = '${login}';
         `
 
         let result = await knexConnection.raw(sql)
@@ -132,5 +127,5 @@ module.exports = {
     selectAllAdmin,
     selectByIdAdmin,
     deleteAdmin,
-    selectByUsuarioAdmin
+    selectByLoginAdmin
 }
