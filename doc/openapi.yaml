@@ -531,7 +531,7 @@ components:
       required:
         - nome_usuario
         - email
-        - senha_hash
+        - senha
       type: object
       properties:
         id:
@@ -547,7 +547,7 @@ components:
           format: email
           description: O número máximo de caracteres é de 255
           maxLength: 255
-        senha_hash:
+        senha:
           type: string
           description: O número máximo de caracteres é de 255
           maxLength: 255
@@ -619,7 +619,7 @@ components:
     Login:
       required:
         - login
-        - senha_hash
+        - senha
       type: object
       properties:
         login:
@@ -627,7 +627,7 @@ components:
           description: O número máximo de caracteres é de 255
           maxLength: 255
           minLength: 6
-        senha_hash:
+        senha:
           type: string
           description: O número máximo de caracteres é de 100
           maxLength: 100
