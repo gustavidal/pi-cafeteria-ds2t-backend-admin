@@ -1,7 +1,7 @@
 /************************************************************************************
  * Objetivo: Arquivo responsável pelo CRUD de dados do admin no banco de dados MySQL.
  * Autor: Gustavo Vidal de Abreu
- * Data: 08/06/2026
+ * Data: 08/06/2026 (segunda-feira)
  * Versão: 1.0
 ************************************************************************************/
 
