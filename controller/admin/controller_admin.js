@@ -1,7 +1,7 @@
 /***************************************************************************************************************
  * Objetivo: Arquivo responsável pela validação, tratamento e manipulação de dados para realizar o CRUD de admin.
  * Autor: Gustavo Vidal de Abreu
- * Data: 09/06/2026
+ * Data: 09/06/2026 (terça-feira)
  * Versão: 1.0
 ***************************************************************************************************************/
 
