@@ -213,7 +213,7 @@ const excluirCategoriasIdProduto = async function (idProduto) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
-        let result = await produtoCategoriaDAO.deleteCategoriaByIdProduto(idProduto)
+        let result = await produtoCategoriaDAO.deleteCategoriasByIdProduto(idProduto)
 
         if (result) {
             return customMessages.SUCCESS_DELETED_ITEM // status-code: 200

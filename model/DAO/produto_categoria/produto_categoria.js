@@ -33,13 +33,13 @@ const insertProdutoCategoria = async function (produtoCategoria) {
     }
 }
 
-const updateProdutoCategoria = async function (produto) {
+const updateProdutoCategoria = async function (produtoCategoria) {
     try {
         let sql = `
             update tbl_produto_categoria set
                 id_produto   = ${produtoCategoria.id_produto},
                 id_categoria = ${produtoCategoria.id_categoria}
-            where id = ${produto.id};
+            where id = ${produtoCategoria.id};
         `
 
         let result = await knexConnection.raw(sql)
@@ -152,6 +152,23 @@ const deleteProdutoCategoria = async function (id) {
     }
 }
 
+const deleteCategoriasByIdProduto = async function (idProduto) {
+    try {
+        let sql = `delete from tbl_produto_categoria where id_produto = ${idProduto};`
+
+        let result = await knexConnection.raw(sql)
+
+        if (result)
+            return true
+        else
+            return false
+
+    } catch (error) {
+        return false
+    }
+}
+
+
 module.exports = {
     insertProdutoCategoria,
     updateProdutoCategoria,
@@ -159,5 +176,6 @@ module.exports = {
     selectByIdProdutoCategoria,
     selectCategoriasByIdProduto,
     selectProdutosByIdCategoria,
-    deleteProdutoCategoria
+    deleteProdutoCategoria,
+    deleteCategoriasByIdProduto
 }

@@ -10,6 +10,8 @@ const configMessages = require('../modulo/configMessages.js')
 
 const produtoDAO = require('../../model/DAO/produto/produto.js')
 
+const controllerProdutoCategoria = require('./controller_produto_categoria.js')
+
 const inserirNovoProduto = async function (produto, contentType) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
@@ -24,6 +26,19 @@ const inserirNovoProduto = async function (produto, contentType) {
 
                 if (result) {
                     produto.id = result
+
+                    for (let categoria of produto.categoria) {
+                        let produtoCategoria = {
+                            "id_produto": produto.id,
+                            "id_categoria": categoria.id
+                        }
+
+                        let resultProdutoCategoria = await controllerProdutoCategoria.inserirNovoProdutoCategoria(produtoCategoria)
+
+                        if (!resultProdutoCategoria.status) {
+                            return customMessages.SUCCESS_CREATED_ITEM_WARNING // status-code: 201, porém com problema na inserção de alguns dados
+                        }
+                    }
 
                     customMessages.DEFAULT_MESSAGE.status      = customMessages.SUCCESS_CREATED_ITEM.status
                     customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_CREATED_ITEM.status_code
@@ -59,6 +74,24 @@ const atualizarProduto = async function (produto, id, contentType) {
                     let result = await produtoDAO.updateProduto(produto)
 
                     if (result) {
+                        let resultDeleteCategorias = await controllerProdutoCategoria.excluirCategoriasIdProduto(produto.id)
+
+                        if (resultDeleteCategorias.status) {
+                            for (let categoria of produto.categoria) {
+                                let produtoCategoria = {
+                                    "id_produto": produto.id,
+                                    "id_categoria": categoria.id
+                                }
+
+                                let resultProdutoCategoria = await controllerProdutoCategoria.inserirNovoProdutoCategoria(produtoCategoria)
+
+                                if (!resultProdutoCategoria.status) {
+                                    return customMessages.SUCCESS_CREATED_ITEM_WARNING // status-code: 201, porém com problema na inserção de alguns dados
+                                }
+                            }
+                        }
+
+
                         customMessages.DEFAULT_MESSAGE.status      = customMessages.SUCCESS_UPDATED_ITEM.status
                         customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_UPDATED_ITEM.status_code
                         customMessages.DEFAULT_MESSAGE.message     = customMessages.SUCCESS_UPDATED_ITEM.message
@@ -90,6 +123,14 @@ const listarProduto = async function () {
 
         if (result) {
             if (result.length > 0) {
+                for (let produto of result) {
+                    let resultCategoria = await controllerProdutoCategoria.buscarCategoriasIdProduto(produto.id)
+
+                    if (resultCategoria.status) {
+                        produto.categoria = resultCategoria.response.categorias_produto
+                    }
+                }
+
                 customMessages.DEFAULT_MESSAGE.status            = customMessages.SUCCESS_RESPONSE.status
                 customMessages.DEFAULT_MESSAGE.status_code       = customMessages.SUCCESS_RESPONSE.status_code
                 customMessages.DEFAULT_MESSAGE.response.count    = result.length
@@ -120,6 +161,14 @@ const buscarProduto = async function (id) {
 
             if (result) {
                 if (result.length > 0) {
+                    for (let produto of result) {
+                        let resultCategoria = await controllerProdutoCategoria.buscarCategoriasIdProduto(id)
+
+                        if (resultCategoria.status) {
+                            result[0].categoria = resultCategoria.response.categorias_produto
+                        }
+                    }
+
                     customMessages.DEFAULT_MESSAGE.status           = customMessages.SUCCESS_RESPONSE.status
                     customMessages.DEFAULT_MESSAGE.status_code      = customMessages.SUCCESS_RESPONSE.status_code
                     customMessages.DEFAULT_MESSAGE.response.produto = result
@@ -166,7 +215,7 @@ const validarDados = async function (produto) {
         customMessages.ERROR_BAD_REQUEST.field = '[NOME] INVÁLIDA'
     } else if (produto.descricao == undefined || produto.descricao == '' || produto.descricao == null || produto.descricao.length > 255) {
         customMessages.ERROR_BAD_REQUEST.field = '[DESCRIÇÃO] INVÁLIDA'
-    } else if (produto.preco == undefined || produto.preco == '' || produto.preco == null || produto.preco < 0 || produto.preco > 999.99) {
+    } else if (produto.preco == undefined || produto.preco == '' || produto.preco == null || isNaN(produto.preco) || produto.preco < 0 || produto.preco > 999.99) {
         customMessages.ERROR_BAD_REQUEST.field = '[PREÇO] INVÁLIDA'
     } else {
         return false
