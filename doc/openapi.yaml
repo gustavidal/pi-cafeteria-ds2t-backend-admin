@@ -15,12 +15,27 @@ externalDocs:
   url: http://swagger.io
 servers:
   - url: https://frequency-80-cafe-administracao.onrender.com/
+tags:
+  - name: "Administração (Admin)"
+    description: "Endpoints restritos (admin) para gerenciamento do sistema"
+  - name: "Administração (Categoria)"
+    description: "Endpoints restritos (categoria) para gerenciamento do sistema"
+  - name: "Administração (Imagem)"
+    description: "Endpoints restritos (imagem) para gerenciamento do sistema"
+  - name: "Administração (Produto)"
+    description: "Endpoints restritos (produto) para gerenciamento do sistema"
+  - name: "Landing Page (Categoria)"
+    description: "Endpoints públicos (categoria) utilizados na página principal"
+  - name: "Landing Page (Imagem)"
+    description: "Endpoints públicos (imagem) utilizados na página principal"
+  - name: "Landing Page (Produto)"
+    description: "Endpoints públicos (produto) utilizados na página principal"
 paths:
-  # ENDPOINTS - ADMIN
+  # ENDPOINTS ADMINISTRAÇÃO - ADMIN
   /v1/frequency80cafe/administracao/admin:
     post:
       tags:
-        - Admin
+        - Administração (Admin)
       summary: Adiciona um novo admin
       description: Endpoint para enviar os dados do admin a serem cadastrados
       requestBody:
@@ -41,7 +56,7 @@ paths:
           description: Error Internal Server (Controller | Model)
     get:
       tags:
-        - Admin
+        - Administração (Admin)
       summary: Lista todos os admins
       description: Endpoint para listar todos os admins cadastrados
       responses:
@@ -60,7 +75,7 @@ paths:
   /v1/frequency80cafe/administracao/admin/{id}:
     get:
       tags:
-        - Admin
+        - Administração (Admin)
       summary: Busca um admin pelo id
       description: Endpoint para retornar um admin pelo id
       parameters:
@@ -86,7 +101,7 @@ paths:
           description: Error Internal Server (Controller | Model)
     put:
       tags:
-        - Admin
+        - Administração (Admin)
       summary: Atualiza um admin pelo id
       description: Endpoint para atualizar um admin pelo id
       parameters:
@@ -117,7 +132,7 @@ paths:
           description: Error internal server (Controller | Model)
     delete:
       tags:
-        - Admin
+        - Administração (Admin)
       summary: Exclui um admin pelo id
       description: Endpoint para excluir um admin pelo id
       parameters:
@@ -140,7 +155,7 @@ paths:
   /v1/frequency80cafe/administracao/admin/login:
     post:
       tags:
-        - Admin
+        - Administração (Admin)
       summary: Realiza o login do admin
       description: Endpoint para realizar o login do admin
       requestBody:
@@ -165,11 +180,11 @@ paths:
           description: Error Content Type
         '500':
           description: Error Internal Server (Controller | Model)
-  # ENDPOINTS - CATEGORIA
+  # ENDPOINTS ADMINISTRAÇÃO - CATEGORIA
   /v1/frequency80cafe/administracao/categoria:
     post:
       tags:
-        - Categoria
+        - Administração (Categoria)
       summary: Adiciona uma nova categoria
       description: Endpoint para enviar os dados da nova categoria a serem cadastrados
       requestBody:
@@ -190,7 +205,7 @@ paths:
           description: Error Internal Server (Controller | Model)
     get:
       tags:
-        - Categoria
+        - Administração (Categoria)
       summary: Lista todas as categorias
       description: Endpoint para listar todas as categorias cadastradas
       responses:
@@ -209,7 +224,7 @@ paths:
   /v1/frequency80cafe/administracao/categoria/{id}:
     get:
       tags:
-        - Categoria
+        - Administração (Categoria)
       summary: Busca uma categoria pelo id
       description: Endpoint para retornar uma categoria pelo id
       parameters:
@@ -235,7 +250,7 @@ paths:
           description: Error Internal Server (Controller | Model)
     put:
       tags:
-        - Categoria
+        - Administração (Categoria)
       summary: Atualiza uma categoria pelo id
       description: Endpoint para atualizar uma categoria pelo id
       parameters:
@@ -266,7 +281,7 @@ paths:
           description: Error Internal Server (Controller | Model)
     delete:
       tags:
-        - Categoria
+        - Administração (Categoria)
       summary: Exclui uma categoria pelo id
       description: Endpoint para excluir uma categoria pelo id
       parameters:
@@ -286,11 +301,11 @@ paths:
           description: Error Not Found
         '500':
           description: Error Internal Server (Controller | Model)
-  # ENDPOINTS - IMAGEM
+  # ENDPOINTS ADMINISTRAÇÃO - IMAGEM
   /v1/frequency80cafe/administracao/imagem:
     post:
       tags:
-        - Imagem
+        - Administração (Imagem)
       summary: Adiciona uma nova imagem
       description: Endpoint para enviar os dados da nova imagem a ser inserida no sistema
       requestBody:
@@ -311,7 +326,7 @@ paths:
           description: Error Internal Server (Controller | Model)
     get:
       tags:
-        - Imagem
+        - Administração (Imagem)
       summary: Lista todas as imagens
       description: Endpoint para listar todas as imagens cadastradas
       responses:
@@ -330,7 +345,7 @@ paths:
   /v1/frequency80cafe/administracao/imagem/{id}:
     get:
       tags:
-        - Imagem
+        - Administração (Imagem)
       summary: Busca uma imagem pelo id
       description: Endpoint para retornar uma imagem pelo id
       parameters:
@@ -356,7 +371,7 @@ paths:
           description: Error Internal Server (Controller | Model)
     put:
       tags:
-        - Imagem
+        - Administração (Imagem)
       summary: Atualiza uma imagem pelo id
       description: Endpoint para atualizar uma imagem pelo id
       parameters:
@@ -387,7 +402,7 @@ paths:
           description: Error Internal Server (Controller | Model)
     delete:
       tags:
-        - Imagem
+        - Administração (Imagem)
       summary: Exclui uma imagem pelo id
       description: Endpoint para excluir uma imagem pelo id
       parameters:
@@ -407,11 +422,11 @@ paths:
           description: Error Not Found
         '500':
           description: Error Internal Server (Controller | Model)
-  # ENDPOINTS - PRODUTO
+  # ENDPOINTS ADMINISTRAÇÃO - PRODUTO
   /v1/frequency80cafe/administracao/produto:
     post:
       tags:
-        - Produto
+        - Administração (Produto)
       summary: Adiciona um novo produto
       description: Endpoint para enviar os dados do produto a serem cadastrados
       requestBody:
@@ -432,7 +447,7 @@ paths:
           description: Error Internal Server (Controller | Model)
     get:
       tags:
-        - Produto
+        - Administração (Produto)
       summary: Lista todos os produtos
       description: Endpoint para listar todos os produtos cadastrados
       responses:
@@ -451,7 +466,7 @@ paths:
   /v1/frequency80cafe/administracao/produto/{id}:
     get:
       tags:
-        - Produto
+        - Administração (Produto)
       summary: Busca um produto pelo id
       description: Endpoint para retornar um produto pelo id
       parameters:
@@ -477,7 +492,7 @@ paths:
           description: Error Internal Server (Controller | Model)
     put:
       tags:
-        - Produto
+        - Administração (Produto)
       summary: Atualiza um produto pelo id
       description: Endpoint para atualizar um produto pelo id
       parameters:
@@ -508,7 +523,7 @@ paths:
           description: Error Internal Server (Controller | Model)
     delete:
       tags:
-        - Produto
+        - Administração (Produto)
       summary: Exclui um produto pelo id
       description: Endpoint para excluir um produto pelo id
       parameters:
@@ -528,7 +543,153 @@ paths:
           description: Error Not Found
         '500':
           description: Error Internal Server (Controller | Model)
+  # ENDPOINTS LANDING PAGE - CATEGORIA
+  /v1/frequency80cafe/categoria:
+    get:
+      tags:
+        - Landing Page (Categoria)
+      summary: Lista todas as categorias
+      description: Endpoint para listar todas as categorias cadastradas
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CategoriaGet"
+        "404":
+          description: Error Not Found
+        "500":
+          description: Error Internal Server (Controller | Model)
+  /v1/frequency80cafe/categoria/{id}:
+    get:
+      tags:
+        - Landing Page (Categoria)
+      summary: Busca uma categoria pelo id
+      description: Endpoint para retornar uma categoria pelo id
+      parameters:
+        - name: id
+          in: path
+          description: id para realizar a busca da categoria
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategoriaGet"
+        "400":
+          description: Error Bad Request (id)
+        "404":
+          description: Error Not Found
+        "500":
+          description: Error Internal Server (Controller | Model)
+  # ENDPOINTS LANDING PAGE - IMAGEM
+  /v1/frequency80cafe/imagem:
+    get:
+      tags:
+        - Landing Page (Imagem)
+      summary: Lista todas as imagens
+      description: Endpoint para listar todas as imagens cadastradas
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ImagemGet"
+        "404":
+          description: Error Not Found
+        "500":
+          description: Error Internal Server (Controller | Model)
+  /v1/frequency80cafe/imagem/{id}:
+    get:
+      tags:
+        - Landing Page (Imagem)
+      summary: Busca uma imagem pelo id
+      description: Endpoint para retornar uma imagem pelo id
+      parameters:
+        - name: id
+          in: path
+          description: id para realizar a busca da imagem
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ImagemGet"
+        "400":
+          description: Error Bad Request (id)
+        "404":
+          description: Error Not Found
+        "500":
+          description: Error Internal Server (Controller | Model)
+  # ENDPOINTS LANDING PAGE - PRODUTO
+  /v1/frequency80cafe/produto:
+    get:
+      tags:
+        - Landing Page (Produto)
+      summary: Lista todos os produtos
+      description: Endpoint para listar todos os produtos cadastrados
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ProdutoGet"
+        "404":
+          description: Error Not Found
+        "500":
+          description: Error Internal Server (Controller | Model)
+  /v1/frequency80cafe/produto/{id}:
+    get:
+      tags:
+        - Landing Page (Produto)
+      summary: Busca um produto pelo id
+      description: Endpoint para retornar um produto pelo id
+      parameters:
+        - name: id
+          in: path
+          description: id para realizar a busca do produto
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProdutoGet"
+        "400":
+          description: Error Bad Request (id)
+        "404":
+          description: Error Not Found
+        "500":
+          description: Error Internal Server (Controller | Model)
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     # SCHEMAS GERAIS
     Admin:
@@ -536,6 +697,7 @@ components:
         - nome_usuario
         - email
         - senha
+        - jwt
       type: object
       properties:
         id:
@@ -557,6 +719,10 @@ components:
           description: O número máximo de caracteres é de 255
           maxLength: 255
           minLength: 8
+        jwt:
+          type: string
+          description: O número máximo de caracteres é de 255
+          maxLength: 255
     Categoria:
       required:
         - categoria
@@ -593,7 +759,6 @@ components:
         - nome
         - descricao
         - preco
-        - is_disponivel
       type: object
       properties:
         id:
@@ -611,8 +776,6 @@ components:
           format: double
           minimum: 0
           maximum: 999.99
-        is_disponivel:
-          type: boolean
         categoria:
           type: array
           items:
@@ -625,6 +788,7 @@ components:
       required:
         - login
         - senha
+        - jwt
       type: object
       properties:
         login:
@@ -634,9 +798,13 @@ components:
           minLength: 6
         senha:
           type: string
-          description: O número máximo de caracteres é de 100
-          maxLength: 100
+          description: O número máximo de caracteres é de 255
+          maxLength: 255
           minLength: 8
+        jwt:
+          type: string
+          description: O número máximo de caracteres é de 255
+          maxLength: 255
     # SCHEMAS PARA OS GETS
     AdminGet:
       required:
@@ -648,13 +816,14 @@ components:
           minimum: 1
         nome_usuario:
           type: string
-          description: O número máximo de caracteres é de 100
           maxLength: 100
           minLength: 6
         email:
           type: string
           format: email
-          description: O número máximo de caracteres é de 255
+          maxLength: 255
+        jwt:
+          type: string
           maxLength: 255
     CategoriaGet:
       required:
@@ -666,7 +835,6 @@ components:
           minimum: 1
         categoria:
           type: string
-          description: O número máximo de caracteres é de 45
           maxLength: 45
     ImagemGet:
       required:
@@ -679,9 +847,8 @@ components:
         url:
           type: string
           format: uri
-          pattern: '^https?://.+'
-          example: 'https://imagem.example.com'
-          description: O número máximo de caracteres é de 255
+          pattern: "^https?://.+"
+          example: "https://imagem.example.com"
           maxLength: 255
     ProdutoGet:
       required:
@@ -693,54 +860,19 @@ components:
           minimum: 1
         nome:
           type: string
-          description: O número máximo de caracteres é de 100
           maxLength: 100
         descricao:
           type: string
-          description: O número máximo de caracteres é ilimitado
         preco:
           type: number
           format: double
           minimum: 0
           maximum: 999.99
-        is_disponivel:
-          type: boolean
         imagem:
           type: array
           items:
-            $ref: '#/components/schemas/ImagemGet'
+            $ref: "#/components/schemas/ImagemGet"
         categoria:
           type: array
           items:
-            $ref: '#/components/schemas/CategoriaGet'
-  requestBodies:
-    Admin:
-      description: Objeto que deve ser enviado no Body das requisicoes
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Admin'
-    Categoria:
-      description: Objeto que deve ser enviado no Body das requisicoes
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Categoria'
-    Imagem:
-      description: Objeto que deve ser enviado no Body das requisicoes
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Imagem'
-    Produto:
-      description: Objeto que deve ser enviado no Body das requisicoes
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Produto'
-    Login:
-      description: Objeto que deve ser enviado no Body das requisicoes
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Login'
+            $ref: "#/components/schemas/CategoriaGet"
