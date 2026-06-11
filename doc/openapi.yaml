@@ -697,7 +697,6 @@ components:
         - nome_usuario
         - email
         - senha
-        - jwt
       type: object
       properties:
         id:
@@ -719,10 +718,6 @@ components:
           description: O número máximo de caracteres é de 255
           maxLength: 255
           minLength: 8
-        jwt:
-          type: string
-          description: O número máximo de caracteres é de 255
-          maxLength: 255
     Categoria:
       required:
         - categoria

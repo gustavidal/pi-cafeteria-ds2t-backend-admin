@@ -21,6 +21,18 @@ app.use(cors(corsOptions))
 const adminRouter = require('./routes/admin.router.js')
 app.use('/v1/frequency80cafe/administracao/admin/', cors(), adminRouter)
 
+// Import do arquivo de rotas da CATEGORIA
+const categoriaRouter = require('./routes/categoria.router.js')
+app.use('/v1/frequency80cafe/administracao/categoria/', cors(), categoriaRouter)
+
+// Import do arquivo de rotas da IMAGEM
+const imagemRouter = require('./routes/imagem.router.js')
+app.use('/v1/frequency80cafe/administracao/imagem/', cors(), imagemRouter)
+
+// Import do arquivo de rotas do PRODUTO
+const produtoRouter = require('./routes/produto.router.js')
+app.use('/v1/frequency80cafe/administracao/produto/', cors(), produtoRouter)
+
 
 
 // Iniciar a API

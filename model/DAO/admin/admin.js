@@ -15,11 +15,13 @@ const insertAdmin = async function (admin) {
             insert into tbl_admin (
                 nome_usuario,
                 email,
-                senha_hash
+                senha,
+                jwt
             ) values (
                 '${admin.nome_usuario}',
                 '${admin.email}',
-                '${admin.senha_hash}'
+                '${admin.senha}',
+                '${admin.jwt}'
             );
         `
 
@@ -41,7 +43,8 @@ const updateAdmin = async function (admin) {
             update tbl_admin set
                 nome_usuario = '${admin.nome_usuario}',
                 email        = '${admin.email}',
-                senha_hash   = '${admin.senha_hash}'
+                senha        = '${admin.senha}',
+                jwt          = '${admin.jwt}'
             where id = ${admin.id};
         `
 
@@ -60,7 +63,7 @@ const updateAdmin = async function (admin) {
 const selectAllAdmin = async function () {
     try {
         let sql = `
-            select id, nome_usuario, email
+            select id, nome_usuario, email, jwt
             from tbl_admin order by id desc;
         `
 
@@ -79,7 +82,7 @@ const selectAllAdmin = async function () {
 const selectByIdAdmin = async function (id) {
     try {
         let sql = `
-            select id, nome_usuario, email
+            select id, nome_usuario, email, jwt
             from tbl_admin where id = ${id};
         `
 
@@ -111,6 +114,19 @@ const deleteAdmin = async function (id) {
     }
 }
 
+const saveTokenAdmin = async function (id, jwt) {
+    try {
+        let sql = `
+        update tbl_admin set
+            jwt = '${jwt}'
+        where id = ${id}`
+        let result = await query(sql)
+        return result.affectedRows > 0 ? true : false
+    } catch (error) {
+        return false
+    }
+}
+
 const selectByLoginAdmin = async function (login) {
     try {
         let sql = `
@@ -136,5 +152,6 @@ module.exports = {
     selectAllAdmin,
     selectByIdAdmin,
     deleteAdmin,
+    saveTokenAdmin,
     selectByLoginAdmin
 }

@@ -1,21 +1,23 @@
-/****************************************************************************************
- * Objetivo: Arquivo responsável pelo CRUD de dados de categoria no banco de dados MySQL.
+/*************************************************************************************
+ * Objetivo: Arquivo responsável pelo CRUD de dados de imagem no banco de dados MySQL.
  * Autor: Gustavo Vidal de Abreu
  * Data: 11/06/2026 (quinta-feira)
  * Versão: 1.0
-****************************************************************************************/
+*************************************************************************************/
 
 const knex = require('knex')
 const knexDatabaseConfig = require('../../database_config/knexConfig.js')
 const knexConnection = knex(knexDatabaseConfig.development)
 
-const insertCategoria = async function (categoria) {
+const insertImagem = async function (imagem) {
     try {
         let sql = `
-            insert into tbl_categoria (
-                categoria
+            insert into tbl_imagem (
+                url,
+                id_produto
             ) values (
-                '${categoria.categoria}'
+                replace('${imagem.url}', "'", ""),
+                ${imagem.id_produto}
             );
         `
 
@@ -31,12 +33,13 @@ const insertCategoria = async function (categoria) {
     }
 }
 
-const updateCategoria = async function (categoria) {
+const updateImagem = async function (imagem) {
     try {
         let sql = `
-            update tbl_categoria set
-                categoria = '${categoria.categoria}'
-            where id = ${categoria.id};
+            update tbl_imagem set
+                url        = replace('${imagem.url}', "'", ""),
+                id_produto = ${imagem.id_produto}
+            where id = ${imagem.id};
         `
 
         let result = await knexConnection.raw(sql)
@@ -51,10 +54,10 @@ const updateCategoria = async function (categoria) {
     }
 }
 
-const selectAllCategoria = async function () {
+const selectAllImagem = async function () {
     try {
         let sql = `
-            select * from tbl_categoria order by id desc;
+            select * from tbl_imagem order by id desc;
         `
 
         let result = await knexConnection.raw(sql)
@@ -69,10 +72,10 @@ const selectAllCategoria = async function () {
     }
 }
 
-const selectByIdCategoria = async function (id) {
+const selectByIdImagem = async function (id) {
     try {
         let sql = `
-            select * from tbl_categoria where id = ${id};
+            select * from tbl_imagem where id = ${id};
         `
 
         let result = await knexConnection.raw(sql)
@@ -87,9 +90,9 @@ const selectByIdCategoria = async function (id) {
     }
 }
 
-const deleteCategoria = async function (id) {
+const deleteImagem = async function (id) {
     try {
-        let sql = `delete from tbl_categoria where id = ${id};`
+        let sql = `delete from tbl_imagem where id = ${id};`
 
         let result = await knexConnection.raw(sql)
 
@@ -104,9 +107,9 @@ const deleteCategoria = async function (id) {
 }
 
 module.exports = {
-    insertCategoria,
-    updateCategoria,
-    selectAllCategoria,
-    selectByIdCategoria,
-    deleteCategoria
+    insertImagem,
+    updateImagem,
+    selectAllImagem,
+    selectByIdImagem,
+    deleteImagem
 }

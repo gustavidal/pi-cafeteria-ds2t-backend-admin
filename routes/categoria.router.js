@@ -1,9 +1,9 @@
-/*******************************************************************
- * Objetivo: Arquivo responsável pela organização de rotas do admin.
+/***********************************************************************
+ * Objetivo: Arquivo responsável pela organização de rotas da categoria.
  * Autor: Gustavo Vidal de Abreu
- * Data: 10/06/2026 (quarta-feira)
+ * Data: 11/06/2026 (quinta-feira)
  * Versão: 1.0
-*******************************************************************/
+***********************************************************************/
 
 // Import do express
 const express = require('express')
@@ -18,20 +18,20 @@ const bodyParserJSON = bodyParser.json()
 const router = express.Router()
 
 // Import da controller de admin
-const controllerAdmin = require('../controller/admin/controller_admin.js')
+const controllerCategoria = require('../controller/categoria/controller_categoria.js')
 
 /************************ENDPOINTS************************/
 router.post('/', bodyParserJSON, async function (request, response) {
     let dados       = request.body
     let contentType = request.headers['content-type']
-    let result      = await controllerAdmin.inserirNovoAdmin(dados, contentType)
+    let result      = await controllerCategoria.inserirNovaCategoria(dados, contentType)
 
     response.status(result.status_code)
     response.json(result)
 })
 
 router.get('/', async function (request, response) {
-    let result = await controllerAdmin.listarAdmin()
+    let result = await controllerCategoria.listarCategoria()
 
     response.status(result.status_code)
     response.json(result)
@@ -39,7 +39,7 @@ router.get('/', async function (request, response) {
 
 router.get('/:id', async function (request, response) {
     let id     = request.params.id
-    let result = await controllerAdmin.buscarAdmin(id)
+    let result = await controllerCategoria.buscarCategoria(id)
 
     response.status(result.status_code)
     response.json(result)
@@ -49,7 +49,7 @@ router.put('/:id', bodyParserJSON, async function (request, response) {
     let contentType = request.headers['content-type']
     let id          = request.params.id
     let dados       = request.body
-    let result      = await controllerAdmin.atualizarAdmin(dados, id, contentType)
+    let result      = await controllerCategoria.atualizarCategoria(dados, id, contentType)
 
     response.status(result.status_code)
     response.json(result)
@@ -57,16 +57,7 @@ router.put('/:id', bodyParserJSON, async function (request, response) {
 
 router.delete('/:id', async function (request, response) {
     let id     = request.params.id
-    let result = await controllerAdmin.excluirAdmin(id)
-
-    response.status(result.status_code)
-    response.json(result)
-})
-
-router.post('/login', bodyParserJSON, async function (request, response) {
-    let dados       = request.body
-    let contentType = request.headers['content-type']
-    let result      = await controllerAdmin.loginAdmin(dados, contentType)
+    let result = await controllerCategoria.excluirCategoria(id)
 
     response.status(result.status_code)
     response.json(result)
