@@ -346,4 +346,4 @@ Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICE
 
 ---
 
-**Desenvolvido com ❤️ para Frequency 80 Cafe**
+**Desenvolvido com ❤️ no SENAI Jandira**
