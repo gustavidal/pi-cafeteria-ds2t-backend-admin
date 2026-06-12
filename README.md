@@ -1,4 +1,4 @@
-# 🍽️ Frequency 80 Cafe - API de Controle de Produtos
+# 🍽️ Cafeteria DS2T - Backend Administrativo
 
 [![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
@@ -11,10 +11,6 @@
 
 Esta é uma API robusta e segura para controle de produtos destinada à cafeteria temática **Frequency 80 Cafe**. A API fornece endpoints para gerenciamento administrativo completo e acesso público aos dados de produtos, categorias e imagens através da landing page.
 
-**Versão:** 1.0.0  
-**Contato:** [gustavovidalgva@gmail.com](mailto:gustavovidalgva@gmail.com)  
-**Licença:** Apache 2.0
-
 ## 🚀 Tecnologias Utilizadas
 
 - **Node.js** - Runtime JavaScript
@@ -22,51 +18,38 @@ Esta é uma API robusta e segura para controle de produtos destinada à cafeteri
 - **OpenAPI 3.0.3** - Especificação e documentação da API
 - **JWT (JSON Web Tokens)** - Autenticação segura
 - **RESTful** - Arquitetura de API
+- **bcrypt** - Criptografia de senhas
+- **Express**
+- **CORS**
+- **Knex**
+- **mysql2**
+- **body-parser**
+- **dotenv**
 
 ## 📁 Estrutura do Projeto
 
 ```
-├── routes/
-│   ├── admin/           # Rotas de autenticação e gerenciamento de admins
-│   ├── categoria/       # Rotas de gerenciamento de categorias
-│   ├── imagem/          # Rotas de gerenciamento de imagens
-│   └── produto/         # Rotas de gerenciamento de produtos
-├── controllers/         # Lógica de negócio
-├── models/             # Modelos de dados
-├── middleware/         # Middlewares (autenticação, validação)
-├── openapi.yaml        # Documentação OpenAPI
-├── package.json        # Dependências do projeto
-└── README.md           # Este arquivo
-```
-
-## 🔗 URL Base
-
-```
-https://frequency-80-cafe-administracao.onrender.com/
+├── controller/       # Controladores da API
+├── doc/              # Documentação Swagger
+├── middleware/       # Filtros da API
+├── model/            # Modelos de dados
+├── node_modules/     # Modelos do Node
+├── routes/           # Rotas da aplicação
+├── .gitignore        # Arquivo gitignore
+├── app.js            # Arquivo App
+├── LICENSE           # MIT License
+├── package-lock.json # Dependências do projeto
+├── package.json      # Dependências do projeto
+└── README.md         # Este arquivo
 ```
 
 ## 🔐 Autenticação
 
 A API utiliza **Bearer Token JWT** para autenticação de endpoints administrativos.
 
-### Como obter um token:
-
-1. Realize o login através do endpoint `/v1/frequency80cafe/administracao/admin/login`
-2. Envie as credenciais (login e senha)
-3. Receba um token JWT na resposta
-4. Inclua o token no header `Authorization: Bearer <token>` em requisições autenticadas
-
-## 📚 Documentação Interativa
-
-Acesse a documentação completa e teste os endpoints em tempo real:
-
-- **Swagger UI:** `https://frequency-80-cafe-administracao.onrender.com/api-docs`
-- **OpenAPI YAML:** `https://frequency-80-cafe-administracao.onrender.com/openapi.yaml`
-
 ## 🎯 Endpoints por Categoria
 
 ### 🛡️ Administração - Admin
-
 | Método | Endpoint | Descrição | Autenticação |
 |--------|----------|-----------|--------------|
 | POST | `/v1/frequency80cafe/administracao/admin` | Criar novo admin | ❌ |
@@ -77,7 +60,6 @@ Acesse a documentação completa e teste os endpoints em tempo real:
 | POST | `/v1/frequency80cafe/administracao/admin/login` | Fazer login | ❌ |
 
 ### 📂 Administração - Categoria
-
 | Método | Endpoint | Descrição | Autenticação |
 |--------|----------|-----------|--------------|
 | POST | `/v1/frequency80cafe/administracao/categoria` | Criar categoria | ✅ |
@@ -303,14 +285,14 @@ curl -X GET "https://frequency-80-cafe-administracao.onrender.com/v1/frequency80
 ### Pré-requisitos
 
 - Node.js (v14.0.0 ou superior)
-- npm ou yarn
+- npm
 
 ### Passos
 
 1. **Clone o repositório:**
 ```bash
-git clone https://github.com/gustavidal/frequency-80-cafe-api.git
-cd frequency-80-cafe-api
+git clone https://github.com/gustavidal/pi-cafeteria-ds2t-backend-admin
+cd pi-cafeteria-ds2t-backend-admin
 ```
 
 2. **Instale as dependências:**
@@ -318,62 +300,17 @@ cd frequency-80-cafe-api
 npm install
 ```
 
-3. **Configure as variáveis de ambiente:**
+3. **Inicie o servidor:**
 ```bash
-cp .env.example .env
+node app.js
 ```
 
-4. **Inicie o servidor:**
-```bash
-npm start
-```
-
-O servidor será iniciado em `http://localhost:3000`
-
-## 🔧 Scripts Disponíveis
-
-```bash
-# Inicia o servidor em modo desenvolvimento
-npm start
-
-# Inicia o servidor com hot-reload
-npm run dev
-
-# Executa os testes
-npm test
-
-# Lint do código
-npm run lint
-```
-
-## 📝 Variáveis de Ambiente
-
-```env
-# Configurações do Servidor
-PORT=3000
-NODE_ENV=development
-
-# Banco de Dados
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=frequency80cafe
-DB_USER=admin
-DB_PASSWORD=senha_segura
-
-# Autenticação JWT
-JWT_SECRET=sua_chave_secreta_aqui
-JWT_EXPIRE=7d
-
-# Ambiente
-CORS_ORIGIN=*
-API_VERSION=v1
-```
+O servidor será iniciado em `http://localhost:8080`
 
 ## 🔐 Segurança
 
 - ✅ Autenticação JWT para endpoints administrativos
 - ✅ Validação de entrada de dados
-- ✅ Proteção contra CSRF
 - ✅ Criptografia de senhas
 - ✅ Rate limiting
 - ✅ HTTPS em produção
@@ -398,27 +335,14 @@ Todas as respostas de erro incluem mensagens descritivas:
 ```json
 {
   "error": "Descrição do erro",
-  "status": 400,
-  "timestamp": "2024-01-15T10:30:00Z"
+  "status": false,
+  "status_code": 500
 }
 ```
 
-## 📞 Suporte e Contato
-
-Para dúvidas ou sugestões sobre a API, entre em contato:
-
-**Email:** [gustavovidalgva@gmail.com](mailto:gustavovidalgva@gmail.com)
-
-## 🤝 Contribuindo
-
-1. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-2. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-3. Push para a branch (`git push origin feature/AmazingFeature`)
-4. Abra um Pull Request
-
 ## 📄 Licença
 
-Este projeto está licenciado sob a Licença Apache 2.0 - veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 ---
 
