@@ -30,13 +30,6 @@ const inserirNovoAdmin = async function (admin, contentType) {
                 const saltRounds = 10
                 admin.senha = await bcrypt.hash(admin.senha, saltRounds)
 
-                // Gera o JWT antes do INSERT e já coloca no objeto admin
-                const payload = {
-                    "login": admin.nome_usuario
-                }
-
-                admin.jwt = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '8h' })
-
                 let result = await adminDAO.insertAdmin(admin)
 
                 if (result) {
@@ -76,13 +69,12 @@ const atualizarAdmin = async function (admin, id, contentType) {
                     admin.id = Number(id)
 
                     const saltRounds = 10
-                    admin.senha_hash = await bcrypt.hash(admin.senha, saltRounds)
-                    delete admin.senha
+                    admin.senha = await bcrypt.hash(admin.senha, saltRounds)
 
                     let result = await adminDAO.updateAdmin(admin)
 
                     if (result) {
-                        delete admin.senha_hash
+                        delete admin.senha
 
                         customMessages.DEFAULT_MESSAGE.status      = customMessages.SUCCESS_UPDATED_ITEM.status
                         customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_UPDATED_ITEM.status_code
@@ -115,9 +107,9 @@ const listarAdmin = async function () {
 
         if (result) {
             if (result.length > 0) {
-                customMessages.DEFAULT_MESSAGE.status          = customMessages.SUCCESS_RESPONSE.status
-                customMessages.DEFAULT_MESSAGE.status_code     = customMessages.SUCCESS_RESPONSE.status_code
-                customMessages.DEFAULT_MESSAGE.response.count  = result.length
+                customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_RESPONSE.status
+                customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_RESPONSE.status_code
+                customMessages.DEFAULT_MESSAGE.response.count = result.length
                 customMessages.DEFAULT_MESSAGE.response.admins = result
 
                 return customMessages.DEFAULT_MESSAGE // status-code: 200
@@ -144,8 +136,8 @@ const buscarAdmin = async function (id) {
 
             if (result) {
                 if (result.length > 0) {
-                    customMessages.DEFAULT_MESSAGE.status         = customMessages.SUCCESS_RESPONSE.status
-                    customMessages.DEFAULT_MESSAGE.status_code    = customMessages.SUCCESS_RESPONSE.status_code
+                    customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_RESPONSE.status
+                    customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_RESPONSE.status_code
                     customMessages.DEFAULT_MESSAGE.response.admin = result
 
                     return customMessages.DEFAULT_MESSAGE // status-code: 200
@@ -203,31 +195,42 @@ const loginAdmin = async function (admin, contentType) {
 
                         if (senhaValida) {
                             delete admin.senha
-                        
-                            const payload = { id: result[0].id, login: result[0].nome_usuario }
 
-                            const novoJwt = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '8h' })
-                        
-                            // Atualiza o JWT no banco
-                            let tokenSalvo = await adminDAO.saveTokenAdmin(result[0].id, novoJwt)
-                        
-                            if (tokenSalvo) {
-                                admin.jwt = novoJwt
+                            let resultBuscarAdmin = await buscarAdmin(result[0].id)
 
-                                customMessages.DEFAULT_MESSAGE.status         = customMessages.SUCCESS_RESPONSE.status
-                                customMessages.DEFAULT_MESSAGE.status_code    = customMessages.SUCCESS_RESPONSE.status_code
-                                customMessages.DEFAULT_MESSAGE.message        = customMessages.SUCCESS_RESPONSE.message
-                                customMessages.DEFAULT_MESSAGE.response.admin = admin
-                        
-                                return customMessages.DEFAULT_MESSAGE // status-code: 200
+                            if (resultBuscarAdmin) {
+                                admin = resultBuscarAdmin.response.admin[0]
+
+                                const payload = {
+                                    "id": result[0].id,
+                                    "login": result[0].nome_usuario
+                                }
+
+                                const novoJwt = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '8h' })
+
+                                // Atualiza o JWT no banco
+                                let tokenSalvo = await adminDAO.saveTokenAdmin(result[0].id, novoJwt)
+
+                                if (tokenSalvo) {
+                                    admin.jwt = novoJwt
+
+                                    customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_RESPONSE.status
+                                    customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_RESPONSE.status_code
+                                    customMessages.DEFAULT_MESSAGE.message = customMessages.SUCCESS_RESPONSE.message
+                                    customMessages.DEFAULT_MESSAGE.response.admin = admin
+
+                                    return customMessages.DEFAULT_MESSAGE // status-code: 200
+                                } else {
+                                    return customMessages.ERROR_INTERNAL_SERVER_MODEL // status-code: 500 (model)
+                                }
                             } else {
-                                return customMessages.ERROR_INTERNAL_SERVER_MODEL // status-code: 500 (model)
+                                return customMessages.ERROR_UNAUTHORIZED // status-code: 401
                             }
                         } else {
                             return customMessages.ERROR_UNAUTHORIZED // status-code: 401
                         }
                     } else {
-                        return customMessages.ERROR_UNAUTHORIZED // status-code: 404
+                        return customMessages.ERROR_UNAUTHORIZED // status-code: 401
                     }
                 } else {
                     return customMessages.ERROR_INTERNAL_SERVER_MODEL // status-code: 500 (model)
@@ -257,24 +260,24 @@ const validarDados = async function (admin) {
     return customMessages.ERROR_BAD_REQUEST
 }
 
-const validarToken = async function (jwt) {
+const validarToken = async function (token) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
-        if (jwt == undefined || jwt == null || jwt == '') {
+        if (token == undefined || token == null || token == '') {
             return customMessages.ERROR_UNAUTHORIZED // status-code: 401
-        }    
+        } else {
+            const tokenLimpo = String(token).replace('Bearer ', '')
+            const decoded = jwt.verify(tokenLimpo, process.env.JWT_SECRET) // agora "jwt" é a lib
 
-        const tokenLimpo = String(jwt).replace('Bearer ', '')
-        const decoded    = jwt.verify(tokenLimpo, process.env.JWT_SECRET)
+            let result = await adminDAO.selectByIdAdmin(decoded.id)
 
-        let result = await adminDAO.selectByIdAdmin(decoded.id)
-
-        if (!result || result.length === 0 || result[0].jwt !== tokenLimpo) {
-            return customMessages.ERROR_UNAUTHORIZED // status-code: 401
+            if (!result || result.length === 0 || result[0].jwt !== tokenLimpo) {
+                return customMessages.ERROR_UNAUTHORIZED // status-code: 401
+            } else {
+                return false // token válido
+            }
         }
-
-        return false // token válido
     } catch (error) {
         return customMessages.ERROR_UNAUTHORIZED // status-code: 401
     }
@@ -286,5 +289,6 @@ module.exports = {
     listarAdmin,
     buscarAdmin,
     excluirAdmin,
-    loginAdmin
+    loginAdmin,
+    validarToken
 }

@@ -91,7 +91,6 @@ const atualizarProduto = async function (produto, id, contentType) {
                             }
                         }
 
-
                         customMessages.DEFAULT_MESSAGE.status      = customMessages.SUCCESS_UPDATED_ITEM.status
                         customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_UPDATED_ITEM.status_code
                         customMessages.DEFAULT_MESSAGE.message     = customMessages.SUCCESS_UPDATED_ITEM.message
@@ -216,7 +215,7 @@ const validarDados = async function (produto) {
     } else if (produto.descricao == undefined || produto.descricao == '' || produto.descricao == null || produto.descricao.length > 255) {
         customMessages.ERROR_BAD_REQUEST.field = '[DESCRIÇÃO] INVÁLIDA'
     } else if (produto.preco == undefined || produto.preco == '' || produto.preco == null || isNaN(produto.preco) || produto.preco < 0 || produto.preco > 999.99) {
-        customMessages.ERROR_BAD_REQUEST.field = '[PREÇO] INVÁLIDA'
+        customMessages.ERROR_BAD_REQUEST.field = '[PREÇO] INVÁLIDO'
     } else {
         return false
     }

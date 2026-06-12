@@ -1,6 +1,8 @@
+require('dotenv').config()
+
 // Import das dependências para criar a API
-const express    = require('express')
-const cors       = require('cors')
+const express = require('express')
+const cors    = require('cors')
 
 // Criando um objeto do express para criar a API
 const app = express()

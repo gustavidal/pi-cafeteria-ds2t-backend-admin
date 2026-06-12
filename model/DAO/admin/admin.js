@@ -43,8 +43,7 @@ const updateAdmin = async function (admin) {
             update tbl_admin set
                 nome_usuario = '${admin.nome_usuario}',
                 email        = '${admin.email}',
-                senha        = '${admin.senha}',
-                jwt          = '${admin.jwt}'
+                senha        = '${admin.senha}'
             where id = ${admin.id};
         `
 
@@ -117,11 +116,17 @@ const deleteAdmin = async function (id) {
 const saveTokenAdmin = async function (id, jwt) {
     try {
         let sql = `
-        update tbl_admin set
-            jwt = '${jwt}'
-        where id = ${id}`
-        let result = await query(sql)
-        return result.affectedRows > 0 ? true : false
+            update tbl_admin set
+                jwt = '${jwt}'
+            where id = ${id};
+        `
+        let result = await knexConnection.raw(sql)
+
+        if (result)
+            return true
+        else
+            return false
+
     } catch (error) {
         return false
     }

@@ -17,6 +17,9 @@ const bodyParserJSON = bodyParser.json()
 // Criando um objeto de rota para os endpoints
 const router = express.Router()
 
+// Import do arquivo de verificação de token JWT
+const autenticar = require('../middleware/auth.js')
+
 // Import da controller de admin
 const controllerAdmin = require('../controller/admin/controller_admin.js')
 
@@ -30,14 +33,14 @@ router.post('/', bodyParserJSON, async function (request, response) {
     response.json(result)
 })
 
-router.get('/', async function (request, response) {
+router.get('/', autenticar, async function (request, response) {
     let result = await controllerAdmin.listarAdmin()
 
     response.status(result.status_code)
     response.json(result)
 })
 
-router.get('/:id', async function (request, response) {
+router.get('/:id', autenticar,  async function (request, response) {
     let id     = request.params.id
     let result = await controllerAdmin.buscarAdmin(id)
 
@@ -45,7 +48,7 @@ router.get('/:id', async function (request, response) {
     response.json(result)
 })
 
-router.put('/:id', bodyParserJSON, async function (request, response) {
+router.put('/:id', autenticar,  bodyParserJSON, async function (request, response) {
     let contentType = request.headers['content-type']
     let id          = request.params.id
     let dados       = request.body
@@ -55,7 +58,7 @@ router.put('/:id', bodyParserJSON, async function (request, response) {
     response.json(result)
 })
 
-router.delete('/:id', async function (request, response) {
+router.delete('/:id', autenticar, async function (request, response) {
     let id     = request.params.id
     let result = await controllerAdmin.excluirAdmin(id)
 
