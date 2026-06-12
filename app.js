@@ -38,6 +38,6 @@ app.use('/v1/frequency80cafe/administracao/produto/', cors(), produtoRouter)
 
 
 // Iniciar a API
-app.listen(8099, function () {
+app.listen(8080, function () {
     console.log('API aguardando novas requisições...')
 })
