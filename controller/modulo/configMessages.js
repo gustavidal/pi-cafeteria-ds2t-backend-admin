@@ -7,7 +7,7 @@
 
 // Padronização dos retornos da API (cabeçalho)
 const DEFAULT_MESSAGE = {
-    "api_description": "API destinada ao controle de produtos da cafeteria temática Frequency 80 Cafe.",
+    "api_description": "API destinada ao controle de produtos da cafeteria temática Frequency 80 Cafe (Administração).",
     "development": "Gustavo Vidal de Abreu",
     "version": "1.0.6.26",
     "status": Boolean,
