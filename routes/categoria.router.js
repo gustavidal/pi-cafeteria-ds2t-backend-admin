@@ -17,11 +17,14 @@ const bodyParserJSON = bodyParser.json()
 // Criando um objeto de rota para os endpoints
 const router = express.Router()
 
+// Import do arquivo de verificação de token JWT
+const autenticar = require('../middleware/auth.js')
+
 // Import da controller de admin
 const controllerCategoria = require('../controller/categoria/controller_categoria.js')
 
 /************************ENDPOINTS************************/
-router.post('/', bodyParserJSON, async function (request, response) {
+router.post('/', autenticar, bodyParserJSON, async function (request, response) {
     let dados       = request.body
     let contentType = request.headers['content-type']
     let result      = await controllerCategoria.inserirNovaCategoria(dados, contentType)
@@ -45,7 +48,7 @@ router.get('/:id', async function (request, response) {
     response.json(result)
 })
 
-router.put('/:id', bodyParserJSON, async function (request, response) {
+router.put('/:id', autenticar, bodyParserJSON, async function (request, response) {
     let contentType = request.headers['content-type']
     let id          = request.params.id
     let dados       = request.body
@@ -55,7 +58,7 @@ router.put('/:id', bodyParserJSON, async function (request, response) {
     response.json(result)
 })
 
-router.delete('/:id', async function (request, response) {
+router.delete('/:id', autenticar, async function (request, response) {
     let id     = request.params.id
     let result = await controllerCategoria.excluirCategoria(id)
 

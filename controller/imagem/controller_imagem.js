@@ -137,6 +137,35 @@ const buscarImagem = async function (id) {
     }
 }
 
+const buscarImagensIdProduto = async function (idProduto) {
+    let customMessages = JSON.parse(JSON.stringify(configMessages))
+
+    try {
+        if (idProduto == undefined || String(idProduto).replaceAll(' ', '') == '' || idProduto == null || isNaN(idProduto) || idProduto < 1) {
+            customMessages.ERROR_BAD_REQUEST.field = '[ID DO PRODUTO] INVÁLIDO'
+            return customMessages.ERROR_BAD_REQUEST // status-code: 400
+        } else {
+            let result = await imagemDAO.selectImagensByIdProduto(idProduto)
+
+            if (result) {
+                if (result.length > 0) {
+                    customMessages.DEFAULT_MESSAGE.status                   = customMessages.SUCCESS_RESPONSE.status
+                    customMessages.DEFAULT_MESSAGE.status_code              = customMessages.SUCCESS_RESPONSE.status_code
+                    customMessages.DEFAULT_MESSAGE.response.imagens_produto = result
+
+                    return customMessages.DEFAULT_MESSAGE // status-code: 200
+                } else {
+                    return customMessages.ERROR_NOT_FOUND // status-code: 404
+                }
+            } else {
+                return customMessages.ERROR_INTERNAL_SERVER_MODEL // status-code: 500 (model)
+            }
+        }
+    } catch (error) {
+        return customMessages.ERROR_INTERNAL_SERVER_CONTROLLER // status-code: 500 (controller)
+    }
+}
+
 const excluirImagem = async function (id) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
@@ -178,5 +207,6 @@ module.exports = {
     atualizarImagem,
     listarImagem,
     buscarImagem,
+    buscarImagensIdProduto,
     excluirImagem
 }

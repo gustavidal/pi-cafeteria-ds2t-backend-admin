@@ -216,8 +216,6 @@ paths:
     get:
       tags:
         - Administração (Categoria)
-      security:
-        - bearerAuth: []
       summary: Lista todas as categorias
       description: Endpoint para listar todas as categorias cadastradas
       responses:
@@ -237,8 +235,6 @@ paths:
     get:
       tags:
         - Administração (Categoria)
-      security:
-        - bearerAuth: []
       summary: Busca uma categoria pelo id
       description: Endpoint para retornar uma categoria pelo id
       parameters:
@@ -347,8 +343,6 @@ paths:
     get:
       tags:
         - Administração (Imagem)
-      security:
-        - bearerAuth: []
       summary: Lista todas as imagens
       description: Endpoint para listar todas as imagens cadastradas
       responses:
@@ -368,8 +362,6 @@ paths:
     get:
       tags:
         - Administração (Imagem)
-      security:
-        - bearerAuth: []
       summary: Busca uma imagem pelo id
       description: Endpoint para retornar uma imagem pelo id
       parameters:
@@ -478,8 +470,6 @@ paths:
     get:
       tags:
         - Administração (Produto)
-      security:
-        - bearerAuth: []
       summary: Lista todos os produtos
       description: Endpoint para listar todos os produtos cadastrados
       responses:
@@ -499,8 +489,6 @@ paths:
     get:
       tags:
         - Administração (Produto)
-      security:
-        - bearerAuth: []
       summary: Busca um produto pelo id
       description: Endpoint para retornar um produto pelo id
       parameters:

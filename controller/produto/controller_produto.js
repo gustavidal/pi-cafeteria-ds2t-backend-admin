@@ -11,6 +11,7 @@ const configMessages = require('../modulo/configMessages.js')
 const produtoDAO = require('../../model/DAO/produto/produto.js')
 
 const controllerProdutoCategoria = require('./controller_produto_categoria.js')
+const controllerImagem           = require('../imagem/controller_imagem.js')
 
 const inserirNovoProduto = async function (produto, contentType) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
@@ -128,6 +129,12 @@ const listarProduto = async function () {
                     if (resultCategoria.status) {
                         produto.categoria = resultCategoria.response.categorias_produto
                     }
+
+                    let resultImagem = await controllerImagem.buscarImagensIdProduto(produto.id)
+
+                    if (resultImagem.status) {
+                        produto.imagem = resultImagem.response.imagens_produto
+                    }
                 }
 
                 customMessages.DEFAULT_MESSAGE.status            = customMessages.SUCCESS_RESPONSE.status
@@ -142,7 +149,6 @@ const listarProduto = async function () {
         } else {
             return customMessages.ERROR_INTERNAL_SERVER_MODEL // status-code: 500 (model)
         }
-
     } catch (error) {
         return customMessages.ERROR_INTERNAL_SERVER_CONTROLLER // status-code: 500 (controller)
     }
@@ -161,10 +167,16 @@ const buscarProduto = async function (id) {
             if (result) {
                 if (result.length > 0) {
                     for (let produto of result) {
-                        let resultCategoria = await controllerProdutoCategoria.buscarCategoriasIdProduto(id)
+                        let resultCategoria = await controllerProdutoCategoria.buscarCategoriasIdProduto(produto.id)
 
                         if (resultCategoria.status) {
                             result[0].categoria = resultCategoria.response.categorias_produto
+                        }
+
+                        let resultImagem = await controllerImagem.buscarImagensIdProduto(produto.id)
+
+                        if (resultImagem.status) {
+                            result[0].imagem = resultImagem.response.imagens_produto
                         }
                     }
 

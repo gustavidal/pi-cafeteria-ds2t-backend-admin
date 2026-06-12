@@ -90,6 +90,27 @@ const selectByIdImagem = async function (id) {
     }
 }
 
+const selectImagensByIdProduto = async function (idProduto) {
+    try {
+        let sql = `
+        select tbl_imagem.id, tbl_imagem.url
+        from tbl_produto
+            inner join tbl_imagem
+                on tbl_produto.id = tbl_imagem.id_produto
+        where tbl_produto.id = ${idProduto};`
+
+        let result = await knexConnection.raw(sql)
+
+        if (Array.isArray(result))
+            return result[0]
+        else
+            return false
+
+    } catch (error) {
+        return false
+    }
+}
+
 const deleteImagem = async function (id) {
     try {
         let sql = `delete from tbl_imagem where id = ${id};`
@@ -111,5 +132,6 @@ module.exports = {
     updateImagem,
     selectAllImagem,
     selectByIdImagem,
+    selectImagensByIdProduto,
     deleteImagem
 }
