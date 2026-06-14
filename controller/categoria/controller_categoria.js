@@ -10,6 +10,9 @@ const configMessages = require('../modulo/configMessages.js')
 
 const categoriaDAO = require('../../model/DAO/categoria/categoria.js')
 
+const controllerProdutoCategoria = require('../produto/controller_produto_categoria.js')
+const controllerProduto = require('../produto/controller_produto.js')
+
 const inserirNovaCategoria = async function (categoria, contentType) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
@@ -90,6 +93,22 @@ const listarCategoria = async function () {
 
         if (result) {
             if (result.length > 0) {
+                for (let categoria of result) {
+                    let resultCategoria = await controllerProdutoCategoria.buscarProdutosIdCategoria(categoria.id)
+
+                    if (resultCategoria.status) {
+                        categoria.produto = resultCategoria.response.produtos_categoria
+
+                        for (let indice in categoria.produto) {
+                            let resultProduto = await controllerProduto.buscarProduto(categoria.produto[indice].id)
+
+                            if (resultProduto.status) {
+                                categoria.produto[indice] = resultProduto.response.produto[0]
+                            }
+                        }
+                    }
+                }
+
                 customMessages.DEFAULT_MESSAGE.status              = customMessages.SUCCESS_RESPONSE.status
                 customMessages.DEFAULT_MESSAGE.status_code         = customMessages.SUCCESS_RESPONSE.status_code
                 customMessages.DEFAULT_MESSAGE.response.count      = result.length
@@ -120,6 +139,22 @@ const buscarCategoria = async function (id) {
 
             if (result) {
                 if (result.length > 0) {
+                    for (let categoria of result) {
+                        let resultCategoria = await controllerProdutoCategoria.buscarProdutosIdCategoria(categoria.id)
+                
+                        if (resultCategoria.status) {
+                            categoria.produto = resultCategoria.response.produtos_categoria
+
+                            for (let indice in categoria.produto) {
+                                let resultProduto = await controllerProduto.buscarProduto(categoria.produto[indice].id)
+
+                                if (resultProduto.status) {
+                                    categoria.produto[indice] = resultProduto.response.produto[0]
+                                }
+                            }
+                        }
+                    }
+
                     customMessages.DEFAULT_MESSAGE.status             = customMessages.SUCCESS_RESPONSE.status
                     customMessages.DEFAULT_MESSAGE.status_code        = customMessages.SUCCESS_RESPONSE.status_code
                     customMessages.DEFAULT_MESSAGE.response.categoria = result

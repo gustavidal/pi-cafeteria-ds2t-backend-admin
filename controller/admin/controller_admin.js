@@ -268,7 +268,7 @@ const validarToken = async function (token) {
             return customMessages.ERROR_UNAUTHORIZED // status-code: 401
         } else {
             const tokenLimpo = String(token).replace('Bearer ', '')
-            const decoded = jwt.verify(tokenLimpo, process.env.JWT_SECRET) // agora "jwt" é a lib
+            const decoded = jwt.verify(tokenLimpo, process.env.JWT_SECRET)
 
             let result = await adminDAO.selectByIdAdmin(decoded.id)
 
