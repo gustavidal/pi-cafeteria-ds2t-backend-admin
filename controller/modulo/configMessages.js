@@ -19,6 +19,7 @@ const DEFAULT_MESSAGE = {
 const ERROR_BAD_REQUEST                = { "status": false, "status_code": 400, "message": "Não foi possível processar a requisição devido a erros de entrada de dados." }
 const ERROR_UNAUTHORIZED               = { "status": false, "status_code": 401, "message": "Não foi possível garantir a permissão do usuário. Dados inválidos." }
 const ERROR_NOT_FOUND                  = { "status": false, "status_code": 404, "message": "Não foi possível encontrar dados para retorno." }
+const ERROR_CONFLICT                   = { "status": false, "status_code": 409, "message": "Não foi possível prosseguir com a requisição devido a um conflito com estado atual do servidor." }
 const ERROR_CONTENT_TYPE               = { "status": false, "status_code": 415, "message": "Não foi possível processar a requisição devido ao formato de dados encaminhado não ser suportado pelo servidor. Deve ser utilizado apenas o formato JSON." }
 const ERROR_INTERNAL_SERVER_CONTROLLER = { "status": false, "status_code": 500, "message": "Não foi possível processar a requisição devido a um erro interno do servidor [CONTROLLER]." }
 const ERROR_INTERNAL_SERVER_MODEL      = { "status": false, "status_code": 500, "message": "Não foi possível processar a requisição devido a um erro interno do servidor [MODEL]." }
@@ -38,6 +39,7 @@ module.exports = {
     ERROR_BAD_REQUEST,
     ERROR_UNAUTHORIZED,
     ERROR_NOT_FOUND,
+    ERROR_CONFLICT,
     ERROR_CONTENT_TYPE,
     ERROR_INTERNAL_SERVER_CONTROLLER,
     ERROR_INTERNAL_SERVER_MODEL,

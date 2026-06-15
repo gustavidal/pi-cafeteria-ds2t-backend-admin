@@ -52,6 +52,8 @@ paths:
           description: Success Created Item
         '400':
           description: Error Bad Request
+        '409':
+          description: Error Conflict
         '415':
           description: Error Content Type
         '500':
@@ -134,10 +136,12 @@ paths:
           description: Error Bad Request (id | dados)
         '404':
           description: Error Not Found
+        '409':
+          description: Error Conflict
         '415':
           description: Error Content Type
         '500':
-          description: Error internal server (Controller | Model)
+          description: Error Internal Server (Controller | Model)
     delete:
       tags:
         - Administração (Admin)

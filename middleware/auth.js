@@ -11,6 +11,7 @@ const controllerAdmin = require('../controller/admin/controller_admin.js')
 // Função que verifica a autenticação do admin
 const autenticar = async function (request, response, next) {
     const token = request.headers.authorization
+    console.log(request.headers)
 
     const validar = await controllerAdmin.validarToken(token)
 

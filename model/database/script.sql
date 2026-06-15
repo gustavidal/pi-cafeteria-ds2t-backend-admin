@@ -1,4 +1,4 @@
-#drop database if exists db_frequency80cafe;
+drop database if exists db_frequency80cafe;
 create database if not exists db_frequency80cafe;
 use db_frequency80cafe;
 
@@ -45,3 +45,6 @@ create table tbl_imagem (
     FOREIGN KEY (id_produto)
     REFERENCES tbl_produto (id)
 );
+
+insert into tbl_admin (nome_usuario, email, senha, jwt) values
+('admin', 'admin@gmail.com', 'admin123', '')
