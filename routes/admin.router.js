@@ -17,14 +17,17 @@ const bodyParserJSON = bodyParser.json()
 // Criando um objeto de rota para os endpoints
 const router = express.Router()
 
-// Import do arquivo de verificação de token JWT
+// Import do middleware de bootstrap para verificar se existe algum admin cadastrado
+const bootstrap = require('../middleware/bootstrap.js')
+
+// Import do middleware de autenticação do admin para verificar o token de acesso JWT
 const autenticar = require('../middleware/auth.js')
 
 // Import da controller de admin
 const controllerAdmin = require('../controller/admin/controller_admin.js')
 
 /************************ENDPOINTS************************/
-router.post('/', bodyParserJSON, async function (request, response) {
+router.post('/', bootstrap, bodyParserJSON, async function (request, response) {
     let dados       = request.body
     let contentType = request.headers['content-type']
     let result      = await controllerAdmin.inserirNovoAdmin(dados, contentType)

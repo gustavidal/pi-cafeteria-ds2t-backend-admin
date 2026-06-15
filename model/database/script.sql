@@ -45,6 +45,3 @@ create table tbl_imagem (
     FOREIGN KEY (id_produto)
     REFERENCES tbl_produto (id)
 );
-
-insert into tbl_admin (nome_usuario, email, senha, jwt) values
-('admin', 'admin@gmail.com', 'admin123', '')

@@ -215,7 +215,7 @@ const loginAdmin = async function (admin, contentType) {
                     if (result.length > 0) {
                         const senhaValida = await bcrypt.compare(admin.senha, result[0].senha)
 
-                        if (senhaValida || admin.senha == result[0].senha) {
+                        if (senhaValida) {
                             delete admin.senha
 
                             let resultBuscarAdmin = await buscarAdmin(result[0].id)

@@ -11,11 +11,11 @@ const controllerAdmin = require('../controller/admin/controller_admin.js')
 // Função que verifica a autenticação do admin
 const autenticar = async function (request, response, next) {
     const token = request.headers.authorization
-    console.log(request.headers)
 
     const validar = await controllerAdmin.validarToken(token)
 
     if (validar) {
+        validar.field = "[TOKEN JWT] não informado, inválido ou expirado."
         return response.status(validar.status_code).json(validar)
     }
 
