@@ -1,8 +1,12 @@
 require('dotenv').config()
 
 // Import das dependências para criar a API
-const express = require('express')
-const cors    = require('cors')
+const express   = require('express')
+const cors      = require('cors')
+
+// Import das dependências para criar a API
+const swaggerUi = require('swagger-ui-express')
+const YAML      = require('yamljs')
 
 // Criando um objeto do express para criar a API
 const app = express()
@@ -34,11 +38,6 @@ app.use('/v1/frequency80cafe/administracao/imagem/', cors(), imagemRouter)
 // Import do arquivo de rotas do PRODUTO
 const produtoRouter = require('./routes/produto.router.js')
 app.use('/v1/frequency80cafe/administracao/produto/', cors(), produtoRouter)
-
-
-
-const swaggerUi = require('swagger-ui-express')
-const YAML = require('yamljs')
 
 const swaggerDocument = YAML.load('./doc/openapi.yaml')
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument))

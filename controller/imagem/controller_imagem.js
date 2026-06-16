@@ -194,7 +194,7 @@ const validarDados = async function (imagem) {
     if (imagem.url == undefined || imagem.url == '' || imagem.url == null || imagem.url.length > 255) {
         customMessages.ERROR_BAD_REQUEST.field = '[URL] INVÁLIDA'
     } else if (imagem.id_produto == undefined || imagem.id_produto == '' || imagem.id_produto == null || imagem.id_produto < 1 || isNaN(imagem.id_produto)) {
-        customMessages.ERROR_BAD_REQUEST.field = '[URL] INVÁLIDA'
+        customMessages.ERROR_BAD_REQUEST.field = '[ID DO PRODUTO] INVÁLIDO'
     } else {
         return false
     }
