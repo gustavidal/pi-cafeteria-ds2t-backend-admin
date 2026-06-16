@@ -37,6 +37,14 @@ app.use('/v1/frequency80cafe/administracao/produto/', cors(), produtoRouter)
 
 
 
+const swaggerUi = require('swagger-ui-express')
+const YAML = require('yamljs')
+
+const swaggerDocument = YAML.load('./doc/openapi.yaml')
+app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+
+
+
 // Iniciar a API
 app.listen(8080, function () {
     console.log('API aguardando novas requisições...')
