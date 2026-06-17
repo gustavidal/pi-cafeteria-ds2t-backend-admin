@@ -762,6 +762,15 @@ components:
           type: string
           description: O número máximo de caracteres é de 45
           maxLength: 45
+        descricao:
+          type: string
+        imagem:
+          type: string
+          format: uri
+          pattern: '^https?://.+'
+          example: 'https://imagem.example.com'
+          description: O número máximo de caracteres é de 255
+          maxLength: 255
     Imagem:
       required:
         - url
@@ -858,6 +867,15 @@ components:
         categoria:
           type: string
           maxLength: 45
+        descricao:
+          type: string
+        imagem:
+          type: string
+          format: uri
+          pattern: '^https?://.+'
+          example: 'https://imagem.example.com'
+          description: O número máximo de caracteres é de 255
+          maxLength: 255
         produto:
           type: array
           items:

@@ -199,6 +199,10 @@ const validarDados = async function (categoria) {
 
     if (categoria.categoria == undefined || categoria.categoria == '' || categoria.categoria == null || categoria.categoria.length > 40) {
         customMessages.ERROR_BAD_REQUEST.field = '[CATEGORIA] INVÁLIDA'
+    } else if (categoria.descricao == undefined || categoria.descricao == '' || categoria.descricao == null) {
+        customMessages.ERROR_BAD_REQUEST.field = '[DESCRIÇÃO] INVÁLIDA'
+    } else if (categoria.imagem == undefined || categoria.imagem == '' || categoria.imagem == null || categoria.imagem.length > 255) {
+        customMessages.ERROR_BAD_REQUEST.field = '[IMAGEM] INVÁLIDA'
     } else {
         return false
     }

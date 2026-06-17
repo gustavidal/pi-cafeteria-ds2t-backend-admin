@@ -13,9 +13,13 @@ const insertCategoria = async function (categoria) {
     try {
         let sql = `
             insert into tbl_categoria (
-                categoria
+                categoria,
+                descricao,
+                imagem
             ) values (
-                '${categoria.categoria}'
+                '${categoria.categoria}',
+                '${categoria.descricao}',
+                '${categoria.imagem}'
             );
         `
 
@@ -35,7 +39,9 @@ const updateCategoria = async function (categoria) {
     try {
         let sql = `
             update tbl_categoria set
-                categoria = '${categoria.categoria}'
+                categoria = '${categoria.categoria}',
+                descricao = '${categoria.descricao}',
+                imagem    = '${categoria.imagem}'
             where id = ${categoria.id};
         `
 
