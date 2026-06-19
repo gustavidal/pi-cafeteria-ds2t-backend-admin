@@ -50,9 +50,6 @@ create table tbl_imagem (
 
 
 
--- ------------------------------------------------------------
--- Tabela de log de exclusões (auditoria)
--- ------------------------------------------------------------
 create table if not exists tbl_log_exclusao (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     tabela_origem VARCHAR(100) NOT NULL,
@@ -63,11 +60,8 @@ create table if not exists tbl_log_exclusao (
 
 DELIMITER $$
 
--- ------------------------------------------------------------
--- TRIGGER: antes de excluir um PRODUTO
--- Remove vínculos em tbl_produto_categoria e tbl_imagem
--- (evita erro de violação de chave estrangeira)
--- ------------------------------------------------------------
+
+
 DROP TRIGGER IF EXISTS trg_before_delete_produto$$
 
 CREATE TRIGGER trg_before_delete_produto
@@ -78,10 +72,8 @@ BEGIN
     DELETE FROM tbl_imagem WHERE id_produto = OLD.id;
 END$$
 
--- ------------------------------------------------------------
--- TRIGGER: depois de excluir um PRODUTO
--- Registra a exclusão no log de auditoria
--- ------------------------------------------------------------
+
+
 DROP TRIGGER IF EXISTS trg_after_delete_produto$$
 
 CREATE TRIGGER trg_after_delete_produto
@@ -92,10 +84,8 @@ BEGIN
     VALUES ('tbl_produto', OLD.id, CONCAT('Produto excluído: ', OLD.nome));
 END$$
 
--- ------------------------------------------------------------
--- TRIGGER: antes de excluir uma CATEGORIA
--- Remove vínculos em tbl_produto_categoria
--- ------------------------------------------------------------
+
+
 DROP TRIGGER IF EXISTS trg_before_delete_categoria$$
 
 CREATE TRIGGER trg_before_delete_categoria
@@ -105,10 +95,8 @@ BEGIN
     DELETE FROM tbl_produto_categoria WHERE id_categoria = OLD.id;
 END$$
 
--- ------------------------------------------------------------
--- TRIGGER: depois de excluir uma CATEGORIA
--- Registra a exclusão no log de auditoria
--- ------------------------------------------------------------
+
+
 DROP TRIGGER IF EXISTS trg_after_delete_categoria$$
 
 CREATE TRIGGER trg_after_delete_categoria
@@ -119,10 +107,8 @@ BEGIN
     VALUES ('tbl_categoria', OLD.id, CONCAT('Categoria excluída: ', OLD.categoria));
 END$$
 
--- ------------------------------------------------------------
--- TRIGGER: depois de excluir uma IMAGEM
--- Registra a exclusão no log de auditoria
--- ------------------------------------------------------------
+
+
 DROP TRIGGER IF EXISTS trg_after_delete_imagem$$
 
 CREATE TRIGGER trg_after_delete_imagem
@@ -133,10 +119,8 @@ BEGIN
     VALUES ('tbl_imagem', OLD.id, CONCAT('Imagem excluída: ', OLD.url));
 END$$
 
--- ------------------------------------------------------------
--- TRIGGER: depois de excluir um ADMIN
--- Registra a exclusão no log de auditoria
--- ------------------------------------------------------------
+
+
 DROP TRIGGER IF EXISTS trg_after_delete_admin$$
 
 CREATE TRIGGER trg_after_delete_admin
