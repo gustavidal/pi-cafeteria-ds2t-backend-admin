@@ -224,7 +224,7 @@ const validarDados = async function (produto) {
 
     if (produto.nome == undefined || produto.nome == '' || produto.nome == null || produto.nome.length > 100) {
         customMessages.ERROR_BAD_REQUEST.field = '[NOME] INVÁLIDA'
-    } else if (produto.descricao == undefined || produto.descricao == '' || produto.descricao == null || produto.descricao.length > 255) {
+    } else if (produto.descricao == undefined || produto.descricao == '' || produto.descricao == null) {
         customMessages.ERROR_BAD_REQUEST.field = '[DESCRIÇÃO] INVÁLIDA'
     } else if (produto.preco == undefined || produto.preco == '' || produto.preco == null || isNaN(produto.preco) || produto.preco < 0 || produto.preco > 999.99) {
         customMessages.ERROR_BAD_REQUEST.field = '[PREÇO] INVÁLIDO'
